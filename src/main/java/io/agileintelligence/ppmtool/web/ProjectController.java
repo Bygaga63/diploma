@@ -36,7 +36,7 @@ public class ProjectController {
         if(errorMap!=null) return errorMap;
 
         Project project1 = projectService.saveOrUpdateProject(project, principal.getName());
-        return new ResponseEntity<Project>(project1, HttpStatus.CREATED);
+        return new ResponseEntity<>(project1, HttpStatus.CREATED);
     }
 
 
@@ -45,7 +45,7 @@ public class ProjectController {
 
         Project project = projectService.findProjectByIdentifier(projectId, principal.getName());
 
-        return new ResponseEntity<Project>(project, HttpStatus.OK);
+        return new ResponseEntity<>(project, HttpStatus.OK);
     }
 
 
@@ -57,6 +57,6 @@ public class ProjectController {
     public ResponseEntity<?> deleteProject(@PathVariable String projectId, Principal principal){
         projectService.deleteProjectByIdentifier(projectId, principal.getName());
 
-        return new ResponseEntity<String>("Project with ID: '"+projectId+"' was deleted", HttpStatus.OK);
+        return new ResponseEntity<>("Project with ID: '"+projectId+"' was deleted", HttpStatus.OK);
     }
 }

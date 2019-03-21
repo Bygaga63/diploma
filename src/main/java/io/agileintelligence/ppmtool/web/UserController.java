@@ -86,7 +86,7 @@ public class UserController {
     @GetMapping("/activate/{code}")
     public ResponseEntity<?> activateAccount(@PathVariable String code) {
         boolean isActivated = userService.activateUser(code);
-
-        return new ResponseEntity<>(isActivated, HttpStatus.CREATED);
+        HttpStatus result = isActivated ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<>(result);
     }
 }

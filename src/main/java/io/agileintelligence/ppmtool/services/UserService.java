@@ -2,6 +2,7 @@ package io.agileintelligence.ppmtool.services;
 
 
 import io.agileintelligence.ppmtool.domain.User;
+import io.agileintelligence.ppmtool.exceptions.ActivateException;
 import io.agileintelligence.ppmtool.exceptions.UsernameAlreadyExistsException;
 import io.agileintelligence.ppmtool.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,17 +36,19 @@ public class UserService {
             // We don't persist or show the confirmPassword
             newUser.setConfirmPassword("");
             String message = String.format(
-                    "Hello, %s! \n" +
-                            "Welcome to Sweater. Please, visit next link: http://localhost:8080/api/users/activate/%s",
+                    "День добрый, %s! \n" +
+                            "Код подтверждения: %s\n" +
+                            "для успешной регистрации пройдите по ссылку: http://localhost:8080/api/users/activate/%s",
                     newUser.getFullName(),
+                    newUser.getActivationCode(),
                     newUser.getActivationCode()
             );
 
-            mailSender.send(newUser.getUsername(), "Activation code", message);
+            mailSender.send(newUser.getUsername(), "Код подтверждения", message);
             return userRepository.save(newUser);
 
         }catch (Exception e){
-            throw new UsernameAlreadyExistsException("Username '"+newUser.getUsername()+"' already exists");
+            throw new UsernameAlreadyExistsException("Пользователь '"+newUser.getUsername()+"' уже существует");
         }
 
     }
@@ -54,7 +57,7 @@ public class UserService {
         User user = userRepository.findByActivationCode(code);
 
         if (user == null) {
-            return false;
+            throw new ActivateException("Код не найден");
         }
         user.setActive(true);
         user.setActivationCode(null);
