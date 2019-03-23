@@ -14,15 +14,15 @@ import java.util.UUID;
 @Service
 public class UserService {
 
-    @Autowired
     private UserRepository userRepository;
-
-    @Autowired
     private MailSender mailSender;
-
-
-    @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    public UserService(UserRepository userRepository, MailSender mailSender, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.userRepository = userRepository;
+        this.mailSender = mailSender;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+    }
 
     public User saveUser (User newUser){
 

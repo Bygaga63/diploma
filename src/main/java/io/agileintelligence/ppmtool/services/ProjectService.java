@@ -11,6 +11,8 @@ import io.agileintelligence.ppmtool.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class ProjectService {
 
@@ -39,7 +41,7 @@ public class ProjectService {
             User user = userRepository.findByUsername(username);
             project.setUser(user);
             project.setProjectLeader(user.getUsername());
-            project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+            project.setProjectIdentifier(UUID.randomUUID().toString());
 
             if(project.getId()==null){
                 Backlog backlog = new Backlog();
