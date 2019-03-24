@@ -1,5 +1,10 @@
 package io.agileintelligence.ppmtool.payload;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class JWTLoginSucessReponse {
     private boolean success;
     private String token;
@@ -9,23 +14,6 @@ public class JWTLoginSucessReponse {
         this.token = token;
     }
 
-    public boolean isSuccess() {
-        return success;
-    }
-
-    public void setSuccess(boolean success) {
-        this.success = success;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    @Override
     public String toString() {
         return "JWTLoginSucessReponse{" +
                 "success=" + success +

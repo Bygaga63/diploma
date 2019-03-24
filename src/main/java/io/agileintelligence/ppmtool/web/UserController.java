@@ -8,6 +8,7 @@ import io.agileintelligence.ppmtool.security.JwtTokenProvider;
 import io.agileintelligence.ppmtool.services.MapValidationErrorService;
 import io.agileintelligence.ppmtool.services.UserService;
 import io.agileintelligence.ppmtool.validator.UserValidator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,22 +25,14 @@ import static io.agileintelligence.ppmtool.security.SecurityConstants.TOKEN_PREF
 
 @RestController
 @RequestMapping("/api/users")
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    private MapValidationErrorService mapValidationErrorService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private UserValidator userValidator;
-
-    @Autowired
-    private JwtTokenProvider tokenProvider;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final MapValidationErrorService mapValidationErrorService;
+    private final UserService userService;
+    private final UserValidator userValidator;
+    private final JwtTokenProvider tokenProvider;
+    private final AuthenticationManager authenticationManager;
 
 
     @PostMapping("/login")
@@ -83,10 +76,5 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping("/activate/{code}")
-    public ResponseEntity<?> activateAccount(@PathVariable String code) {
-        boolean isActivated = userService.activateUser(code);
-        HttpStatus result = isActivated ? HttpStatus.CREATED : HttpStatus.BAD_REQUEST;
-        return new ResponseEntity<>(result);
-    }
+
 }
