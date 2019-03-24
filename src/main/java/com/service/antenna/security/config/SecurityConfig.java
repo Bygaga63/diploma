@@ -1,6 +1,8 @@
-package com.service.antenna.security;
+package com.service.antenna.security.config;
 
-import com.service.antenna.services.CustomUserDetailsService;
+import com.service.antenna.security.JwtAuthenticationEntryPoint;
+import com.service.antenna.security.filter.JwtAuthenticationFilter;
+import com.service.antenna.security.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +17,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static com.service.antenna.security.SecurityConstants.H2_URL;
 import static com.service.antenna.security.SecurityConstants.SIGN_UP_URLS;
 
 @Configuration
@@ -74,7 +77,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/**/*.css",
                         "/**/*.js"
                 ).permitAll()
-                .antMatchers(SIGN_UP_URLS).permitAll()
+                .antMatchers(SIGN_UP_URLS + "/login").permitAll()
+                .antMatchers(H2_URL).permitAll()
                 .antMatchers("/login").permitAll()
                 .anyRequest().authenticated();
 

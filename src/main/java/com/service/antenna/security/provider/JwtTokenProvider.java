@@ -1,6 +1,7 @@
-package com.service.antenna.security;
+package com.service.antenna.security.provider;
 
 import com.service.antenna.domain.User;
+import com.service.antenna.security.SecurityConstants;
 import io.jsonwebtoken.*;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +25,7 @@ public class JwtTokenProvider {
         claims.put("id", (Long.toString(user.getId())));
         claims.put("username", user.getUsername());
         claims.put("fullName", user.getFullName());
+        claims.put("role", user.getRole());
 
         return Jwts.builder()
                 .setSubject(userId)

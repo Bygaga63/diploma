@@ -8,34 +8,35 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-@Entity
+
 @Getter
 @Setter
 @NoArgsConstructor
+@Entity(name = "task")
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String status;
+    private Status status;
     private Integer priority;
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date create_At;
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date update_At;
 
-
-    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "breakdown_id")
-    private List<BreakdownType> breakdownType;
+    @ManyToMany
+    @JoinTable(name = "task_breakdown",
+            joinColumns = { @JoinColumn(name = "task_id") },
+            inverseJoinColumns = { @JoinColumn(name = "breakdown_id") })
+    private Set<BreakdownType> breakdownType;
 
     @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "area_id")
     private Area area;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name="customer_id")
     private Customer customer;
 

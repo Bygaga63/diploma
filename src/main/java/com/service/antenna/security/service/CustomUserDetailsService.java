@@ -1,7 +1,7 @@
-package com.service.antenna.services;
+package com.service.antenna.security.service;
 
-import com.service.antenna.repositories.UserRepository;
 import com.service.antenna.domain.User;
+import com.service.antenna.repositories.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

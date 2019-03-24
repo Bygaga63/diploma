@@ -1,7 +1,8 @@
-package com.service.antenna.security;
+package com.service.antenna.security.filter;
 
 import com.service.antenna.domain.User;
-import com.service.antenna.services.CustomUserDetailsService;
+import com.service.antenna.security.provider.JwtTokenProvider;
+import com.service.antenna.security.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

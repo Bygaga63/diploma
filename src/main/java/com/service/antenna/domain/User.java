@@ -12,10 +12,11 @@ import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 import java.util.Date;
 
-@Entity
+
 @NoArgsConstructor
 @Getter
 @Setter
+@Entity(name = "user")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,10 +37,6 @@ public class User implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
-
-    //OneToMany with Project
-//    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
-//    private List<Project> projects = new ArrayList<>();
 
     @PrePersist
     protected void onCreate(){

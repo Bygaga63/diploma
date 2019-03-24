@@ -1,16 +1,19 @@
 package com.service.antenna.domain;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Set;
 
 @Data
-@Entity
+@NoArgsConstructor
+@Entity(name = "area")
 public class Area {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true, nullable = false)
     private String caption;
 
     @ManyToMany
@@ -18,4 +21,8 @@ public class Area {
             joinColumns = { @JoinColumn(name = "area_id") },
             inverseJoinColumns = { @JoinColumn(name = "user_id") })
     private Set<User> users;
+
+    public Area(String caption) {
+        this.caption = caption;
+    }
 }
