@@ -12,10 +12,6 @@ public class BreakdownType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(unique = true, nullable = false)
+    @Column(unique = true, nullable = false, name = "type")
     private  String type;
-
-    public BreakdownType(String type) {
-        this.type = type;
-    }
 }

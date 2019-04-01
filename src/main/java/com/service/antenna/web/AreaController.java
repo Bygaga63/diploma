@@ -5,10 +5,9 @@ import com.service.antenna.services.AreaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/areas")
 public class AreaController {
@@ -21,7 +20,7 @@ public class AreaController {
 
     @PostMapping
     public ResponseEntity<?> create(Area area) {
-        return new ResponseEntity<Area>(service.create(area), HttpStatus.CREATED);
+        return new ResponseEntity<>(service.create(area), HttpStatus.CREATED);
     }
 
     @PutMapping

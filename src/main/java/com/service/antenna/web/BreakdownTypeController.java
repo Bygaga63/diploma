@@ -1,15 +1,15 @@
 package com.service.antenna.web;
 
 import com.service.antenna.domain.BreakdownType;
-import com.service.antenna.repositories.BreakdownTypeRepository;
 import com.service.antenna.services.BreakdownTypeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.security.Principal;
+
+@RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/breakdowns")
 public class BreakdownTypeController {
@@ -20,7 +20,7 @@ public class BreakdownTypeController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody BreakdownType type) {
+    public ResponseEntity<?> create(@RequestBody BreakdownType type, Principal principal) {
         return new ResponseEntity<>(service.create(type), HttpStatus.CREATED);
     }
 
