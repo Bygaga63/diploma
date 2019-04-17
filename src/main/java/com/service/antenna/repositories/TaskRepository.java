@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Repository
 public interface TaskRepository extends CrudRepository<Task, Long> {
-    Set<Task> findAllByUser(User user);
+    Set<Task> findAllByUsers(User user);
     Set<Task> findAll();
-    Optional<Task> findByUserAndId(User user , Long id);
+    Optional<Task> findByUsersAndId(User user , Long id);
 }

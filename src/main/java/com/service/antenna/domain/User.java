@@ -32,7 +32,9 @@ public class User implements UserDetails {
     @Transient
     private String confirmPassword;
     private Date create_At;
+    @JsonIgnore
     private Date update_At;
+    @JsonIgnore
     private boolean isActive;
 
     @Enumerated(EnumType.STRING)

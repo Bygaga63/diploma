@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -16,13 +15,4 @@ public class Area {
     @Column(unique = true, nullable = false, name = "caption")
     private String caption;
 
-    @ManyToMany
-    @JoinTable(name = "area_user",
-            joinColumns = { @JoinColumn(name = "area_id") },
-            inverseJoinColumns = { @JoinColumn(name = "user_id") })
-    private Set<User> users;
-
-    public Area(String caption) {
-        this.caption = caption;
-    }
 }

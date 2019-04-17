@@ -7,8 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/breakdowns")
@@ -20,13 +18,13 @@ public class BreakdownTypeController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody BreakdownType type, Principal principal) {
+    public ResponseEntity<?> create(@RequestBody BreakdownType type) {
         return new ResponseEntity<>(service.create(type), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@RequestBody BreakdownType BreakdownType) {
-        return new ResponseEntity<>(service.save(BreakdownType), HttpStatus.OK);
+    public ResponseEntity<?> update(@RequestBody BreakdownType breakdownType) {
+        return new ResponseEntity<>(service.save(breakdownType), HttpStatus.OK);
     }
 
     @DeleteMapping("{breakId}")

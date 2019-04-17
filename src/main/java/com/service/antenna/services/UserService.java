@@ -9,6 +9,7 @@ import com.service.antenna.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Set;
 
@@ -51,8 +52,29 @@ public class UserService {
         }
     }
 
+    public void update(User user){
+        User fromDb = findOneRest(user.getId());
+        fromDb.setUsername(user.getUsername());
+        fromDb.setRole(user.getRole());
+        fromDb.setFullName(user.getFullName());
+
+        if (StringUtils.hasText(user.getPassword())) {
+            if (user.getPassword().equals(user.getConfirmPassword())) {
+                fromDb.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            } else {
+                throw new CustomException("Пароли не совпадают");
+            }
+        }
+
+        repository.save(fromDb);
+    }
+
     public User findOne(String username) {
         return repository.findByUsername(username);
+    }
+
+    public User findOneRest(Long userId) {
+        return repository.findById(userId).orElseThrow(() -> new RuntimeException("Пользователь не найден"));
     }
 
     public Set<User> findAll() {

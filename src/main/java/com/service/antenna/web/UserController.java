@@ -85,6 +85,13 @@ public class UserController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @PutMapping
+    public ResponseEntity<?> update(@Valid @RequestBody User user, BindingResult result) {
+        userValidator.validate(user, result);
+        service.update(user);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @DeleteMapping("{userId}")
     public ResponseEntity<?> remove(@PathVariable Long userId) {
         boolean isRemove = service.remove(userId);

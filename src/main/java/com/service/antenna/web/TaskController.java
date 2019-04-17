@@ -8,12 +8,12 @@ import com.service.antenna.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.security.Principal;
 import java.util.Set;
 
 @Controller
@@ -30,23 +30,28 @@ public class TaskController {
         return ResponseEntity.ok(result);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findOne(@PathVariable Long id, @AuthenticationPrincipal User user){
+        Task task = service.findOneRest(user, id);
+        return ResponseEntity.ok(task);
+    }
+
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody Task task, BindingResult result, Principal principal){
+    public ResponseEntity<?> create(@Valid @RequestBody Task task, BindingResult result){
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
         if (errorMap != null) return errorMap;
-        User user = userService.findOne(principal.getName());
-        Task savedTask = service.create(user, task);
+
+        Task savedTask = service.create(task);
         return new ResponseEntity<>(savedTask, HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<?> update(@Valid @RequestBody Task task, BindingResult result, Principal principal){
+    public ResponseEntity<?> update(@Valid @RequestBody Task task, BindingResult result){
         ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
         if (errorMap != null) return errorMap;
 
-        User user = userService.findOne(principal.getName());
-        Task savedTask = service.save(task);
-        return new ResponseEntity<>(savedTask, HttpStatus.OK);
+        service.save(task);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @DeleteMapping("{taskId}")

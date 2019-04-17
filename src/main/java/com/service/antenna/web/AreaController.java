@@ -19,12 +19,12 @@ public class AreaController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(Area area) {
+    public ResponseEntity<?> create(@RequestBody Area area) {
         return new ResponseEntity<>(service.create(area), HttpStatus.CREATED);
     }
 
     @PutMapping
-    public ResponseEntity<?> update(Area area) {
+    public ResponseEntity<?> update(@RequestBody Area area) {
         return new ResponseEntity<>(service.save(area), HttpStatus.OK);
     }
 

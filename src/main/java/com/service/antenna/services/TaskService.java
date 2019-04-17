@@ -18,18 +18,18 @@ public class TaskService {
 
     public Set<Task> findAll(User user) {
         if (user.getRole() == Role.USER) {
-            return repository.findAllByUser(user);
+            return repository.findAllByUsers(user);
         }
         return repository.findAll();
 
     }
 
     public Task findOneRest(User user, Long id) {
-        return repository.findByUserAndId(user, id).orElseThrow(() -> new CustomException("Заявка не найдена"));
+        return repository.findByUsersAndId(user, id).orElseThrow(() -> new CustomException("Заявка не найдена"));
     }
 
     public Optional<Task>findOne(User user, Long id) {
-        return repository.findById(id);
+        return repository.findByUsersAndId(user, id);
     }
 
     public boolean remove(Long taskId) {
@@ -38,8 +38,7 @@ public class TaskService {
         return !isExists;
     }
 
-    public Task create(User user, Task task) {
-        task.getUser().add(user);
+    public Task create(Task task) {
         return repository.save(task);
     }
 

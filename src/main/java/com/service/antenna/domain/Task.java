@@ -32,7 +32,7 @@ public class Task {
             inverseJoinColumns = { @JoinColumn(name = "breakdown_id") })
     private Set<BreakdownType> breakdownType;
 
-    @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+    @OneToOne
     @JoinColumn(name = "area_id")
     private Area area;
 
@@ -44,7 +44,7 @@ public class Task {
     @JoinTable(name = "user_task",
             joinColumns = { @JoinColumn(name = "task_id") },
             inverseJoinColumns = { @JoinColumn(name = "user_id") })
-    private Set<User> user = new HashSet<>();
+    private Set<User> users = new HashSet<>();
 
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date dueDate;
