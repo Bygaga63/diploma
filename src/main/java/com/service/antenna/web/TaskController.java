@@ -22,11 +22,10 @@ import java.util.Set;
 public class TaskController {
     private final TaskService service;
     private final MapValidationErrorService mapValidationErrorService;
-    private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<?> findAll(User user){
-        Set<Task> result = service.findAll(user);
+    public ResponseEntity<?> findAll(User user, @RequestParam boolean closed){
+        Set<Task> result = service.findAll(user, closed);
         return ResponseEntity.ok(result);
     }
 

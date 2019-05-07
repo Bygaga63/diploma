@@ -1,13 +1,13 @@
 package com.service.antenna.services;
 
-import com.service.antenna.domain.Role;
-import com.service.antenna.domain.Task;
-import com.service.antenna.domain.User;
+import com.service.antenna.domain.*;
 import com.service.antenna.exceptions.CustomException;
 import com.service.antenna.repositories.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -15,13 +15,33 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class TaskService {
     private final TaskRepository repository;
-
-    public Set<Task> findAll(User user) {
+    private final UserService userService;
+    private final BreakdownTypeService breakdownTypeService;
+    public Set<Task> findAll(User user, boolean isClosed) {
         if (user.getRole() == Role.USER) {
-            return repository.findAllByUsers(user);
+            return repository.findAllByUsersAndIsClosed(user, isClosed);
         }
         return repository.findAll();
 
+    }
+
+    public Set<Task> findAll(Long userId, List<Long> breakId, Status status, Date date){
+        User user = userService.findOneRest(userId);
+
+        if (breakId.contains(0L) && status == Status.ALL) {
+            return repository.findAllByUsersAndCreateAtAfter(user, date);
+        }
+
+        if (breakId.contains(0L)) {
+            return repository.findAllByUsersAndStatusAndCreateAtAfter(user, status, date);
+        }
+
+        List<BreakdownType> breakdownTypes = breakdownTypeService.findAllById(breakId);
+        if (status == Status.ALL){
+            return repository.findAllByUsersAndBreakdownTypeAndCreateAtAfter(user, breakdownTypes, date);
+        }
+
+        return repository.findAllByUsersAndBreakdownTypeAndStatusAndCreateAtAfter(user, breakdownTypes, status, date);
     }
 
     public Task findOneRest(User user, Long id) {

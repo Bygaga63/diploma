@@ -19,6 +19,10 @@ public class BreakdownTypeService {
         return repository.findAll();
     }
 
+    public List<BreakdownType> findAllById(List<Long> ids) {
+        return repository.findAllByIdIn(ids);
+    }
+
     public BreakdownType create(BreakdownType type) {
         Optional<BreakdownType> breakdownType = repository.findByType(type.getType());
         if (breakdownType.isPresent()) {

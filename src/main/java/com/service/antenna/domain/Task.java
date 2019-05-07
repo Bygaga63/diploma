@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+//import java.util.Date;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,10 +22,16 @@ public class Task {
     private Long id;
     private Status status;
     private Integer priority;
-    @JsonFormat(pattern = "yyyy-mm-dd")
-    private Date create_At;
-    @JsonFormat(pattern = "yyyy-mm-dd")
-    private Date update_At;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "create_At")
+    @Temporal(TemporalType.DATE)
+    private Date createAt;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "update_At")
+    @Temporal(TemporalType.DATE)
+    private Date updateAt;
+
+    private boolean isClosed;
 
     @ManyToMany
     @JoinTable(name = "task_breakdown",
@@ -52,12 +59,12 @@ public class Task {
 
     @PrePersist
     protected void onCreate(){
-        this.create_At = new Date();
+        this.createAt = new Date();
     }
 
     @PreUpdate
     protected void onUpdate(){
-        this.update_At = new Date();
+        this.updateAt = new Date();
     }
 
 }
