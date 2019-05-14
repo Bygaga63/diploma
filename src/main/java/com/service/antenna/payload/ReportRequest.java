@@ -5,11 +5,12 @@ import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 @Data
 public class ReportRequest {
     private Date period;
-    private List<Long> breakdownType;
-    private Long user;
+    private Set<Long> breakdownType;
+    private Set<Long> users;
     private Status status;
 }

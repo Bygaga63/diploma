@@ -16,10 +16,10 @@ import java.util.Set;
 public interface TaskRepository extends CrudRepository<Task, Long> {
     Set<Task> findAllByUsersAndIsClosed(User user, Boolean closed);
     Set<Task> findAll();
-    Optional<Task> findByUsersAndId(User user , Long id);
+    Optional<Task> findByUsersInAndId(User user , Long id);
 //    Set<Task> findAllByUsersAndBreakdownTypeAndStatus(User user, List<BreakdownType> breakdown, Status status);
-    Set<Task> findAllByUsersAndBreakdownTypeAndStatusAndCreateAtAfter(User user, List<BreakdownType> breakdown, Status status, Date date);
-    Set<Task> findAllByUsersAndBreakdownTypeAndCreateAtAfter(User user, List<BreakdownType> breakdown,Date date);
-    Set<Task> findAllByUsersAndStatusAndCreateAtAfter(User user, Status status, Date date);
-    Set<Task> findAllByUsersAndCreateAtAfter(User user, Date date);
+    Set<Task> findAllByUsersInAndBreakdownTypeAndStatusAndCreateAtAfter(Set<User> user, List<BreakdownType> breakdown, Status status, Date date);
+    Set<Task> findAllByUsersInAndBreakdownTypeAndCreateAtAfter(Set<User> user, List<BreakdownType> breakdown, Date date);
+    Set<Task> findAllByUsersInAndStatusAndCreateAtAfter(Set<User> user, Status status, Date date);
+    Set<Task> findAllByUsersInAndCreateAtAfter(Set<User> user, Date date);
 }

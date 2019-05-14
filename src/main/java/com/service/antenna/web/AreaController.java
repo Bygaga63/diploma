@@ -2,16 +2,21 @@ package com.service.antenna.web;
 
 import com.service.antenna.domain.Area;
 import com.service.antenna.services.AreaService;
+import com.service.antenna.services.MapValidationErrorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/areas")
 public class AreaController {
     public final AreaService service;
+    private final MapValidationErrorService mapValidationErrorService;
 
     @GetMapping
     public ResponseEntity<?> findAll() {
@@ -19,7 +24,9 @@ public class AreaController {
     }
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody Area area) {
+    public ResponseEntity<?> create(@Valid @RequestBody Area area, BindingResult result) {
+        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
+        if (errorMap != null) return errorMap;
         return new ResponseEntity<>(service.create(area), HttpStatus.CREATED);
     }
 

@@ -16,6 +16,7 @@ import java.util.Set;
 public class TaskService {
     private final TaskRepository repository;
     private final UserService userService;
+    private final AddressService addressService;
     private final BreakdownTypeService breakdownTypeService;
     public Set<Task> findAll(User user, boolean isClosed) {
         if (user.getRole() == Role.USER) {
@@ -25,31 +26,32 @@ public class TaskService {
 
     }
 
-    public Set<Task> findAll(Long userId, List<Long> breakId, Status status, Date date){
-        User user = userService.findOneRest(userId);
+    public Set<Task> findAll(Set<Long> users, Set<Long> breakId, Status status, Date date){
+        Set<User> usersFromdb = userService.findAll(users);
+//        User user = userService.findOneRest(userId);
 
         if (breakId.contains(0L) && status == Status.ALL) {
-            return repository.findAllByUsersAndCreateAtAfter(user, date);
+            return repository.findAllByUsersInAndCreateAtAfter(usersFromdb, date);
         }
 
         if (breakId.contains(0L)) {
-            return repository.findAllByUsersAndStatusAndCreateAtAfter(user, status, date);
+            return repository.findAllByUsersInAndStatusAndCreateAtAfter(usersFromdb, status, date);
         }
 
         List<BreakdownType> breakdownTypes = breakdownTypeService.findAllById(breakId);
         if (status == Status.ALL){
-            return repository.findAllByUsersAndBreakdownTypeAndCreateAtAfter(user, breakdownTypes, date);
+            return repository.findAllByUsersInAndBreakdownTypeAndCreateAtAfter(usersFromdb, breakdownTypes, date);
         }
 
-        return repository.findAllByUsersAndBreakdownTypeAndStatusAndCreateAtAfter(user, breakdownTypes, status, date);
+        return repository.findAllByUsersInAndBreakdownTypeAndStatusAndCreateAtAfter(usersFromdb, breakdownTypes, status, date);
     }
 
     public Task findOneRest(User user, Long id) {
-        return repository.findByUsersAndId(user, id).orElseThrow(() -> new CustomException("Заявка не найдена"));
+        return repository.findByUsersInAndId(user, id).orElseThrow(() -> new CustomException("Заявка не найдена"));
     }
 
     public Optional<Task>findOne(User user, Long id) {
-        return repository.findByUsersAndId(user, id);
+        return repository.findByUsersInAndId(user, id);
     }
 
     public boolean remove(Long taskId) {
@@ -59,6 +61,13 @@ public class TaskService {
     }
 
     public Task create(Task task) {
+        Address address = task.getCustomer().getAddress();
+
+        Optional<Address> existAddress = addressService.findAddressRest(address);
+        if (existAddress.isPresent()) {
+            task.getCustomer().setAddress(address);
+        }
+
         return repository.save(task);
     }
 

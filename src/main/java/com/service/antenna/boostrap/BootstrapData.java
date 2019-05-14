@@ -23,9 +23,19 @@ public class BootstrapData implements ApplicationListener<ContextRefreshedEvent>
             user.setPassword("Bygaga63");
             user.setRole(Role.OWNER);
             user.setActive(true);
-            user.setFullName("admin");
+            user.setFullName("Дима");
 
             userService.saveUser(user);
+
+
+            User user2 = new User();
+            user2.setUsername("master");
+            user2.setPassword("Bygaga63");
+            user2.setRole(Role.USER);
+            user2.setActive(true);
+            user2.setFullName("Катя");
+
+            userService.saveUser(user2);
         }
 
 

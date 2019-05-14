@@ -6,10 +6,11 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface BreakdownTypeRepository extends JpaRepository<BreakdownType, Long> {
     Optional<BreakdownType> findByType(String type);
 
-    List<BreakdownType> findAllByIdIn(List<Long> id);
+    List<BreakdownType> findAllByIdIn(Set<Long> id);
 }

@@ -82,6 +82,11 @@ public class UserService {
 
     }
 
+    public Set<User> findAll(Set<Long> id) {
+        return repository.findAllById(id);
+
+    }
+
     public boolean remove(Long userId) {
         repository.deleteById(userId);
         boolean isExists = repository.existsById(userId);
