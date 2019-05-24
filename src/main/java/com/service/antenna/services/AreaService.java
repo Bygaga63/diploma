@@ -31,6 +31,10 @@ public class AreaService {
         return repository.save(caption);
     }
 
+    public Area findOne(Long id){
+        return repository.findById(id).orElseThrow(() -> new CustomException("Район не найден"));
+    }
+
     public boolean remove(Long areaId) {
         repository.deleteById(areaId);
         boolean isExists = repository.existsById(areaId);

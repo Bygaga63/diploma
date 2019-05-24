@@ -46,4 +46,8 @@ public class BreakdownTypeService {
         boolean isExists = repository.existsById(breakId);
         return !isExists;
     }
+
+    public BreakdownType findOne(Long id){
+        return repository.findById(id).orElseThrow(() -> new CustomException("Тип поломки не найден"));
+    }
 }
