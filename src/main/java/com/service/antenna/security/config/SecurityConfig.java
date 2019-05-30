@@ -80,7 +80,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 ).permitAll()
                 .antMatchers(SIGN_UP_URLS + "/login").permitAll()
                 .antMatchers(H2_URL).permitAll()
-                .antMatchers(HttpMethod.GET, "/api/report/document").permitAll()
+                .antMatchers("/api/report/**").permitAll()
                 .antMatchers("/login").permitAll()
                 .anyRequest().authenticated();
 

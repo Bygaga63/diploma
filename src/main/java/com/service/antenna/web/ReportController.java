@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Set;
 
@@ -34,12 +35,12 @@ public class ReportController {
     }
 
 
-    @GetMapping("/document/{base64ReportInfo}")
+    @GetMapping("/{base64ReportInfo}")
     public void getWordFile(@PathVariable  String base64ReportInfo, HttpServletResponse response) throws Docx4JException, IOException {
        String reportInfo = new String(Base64.getDecoder().decode(base64ReportInfo.getBytes()));
         ObjectMapper objectMapper = new ObjectMapper();
         ReportRequest rep = objectMapper.readValue(reportInfo, ReportRequest.class);
         Set<Task> result = taskService.findAll(rep.getUsers(), rep.getBreakdownType(), rep.getStatus(), rep.getPeriod());
-        wordService.createFile(result, response);
+        wordService.createFile(new ArrayList<>(result), response);
     }
 }
