@@ -21,7 +21,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         InvalidLoginResponse loginResponse = new InvalidLoginResponse();
         String jsonLoginResponse = new Gson().toJson(loginResponse);
 
-
+        httpServletResponse.setCharacterEncoding( "UTF-8" );
         httpServletResponse.setContentType("application/json");
         httpServletResponse.setStatus(401);
         httpServletResponse.getWriter().print(jsonLoginResponse);

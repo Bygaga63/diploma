@@ -24,7 +24,7 @@ public class TaskController {
     private final MapValidationErrorService mapValidationErrorService;
 
     @GetMapping
-    public ResponseEntity<?> findAll(User user, @RequestParam boolean closed){
+    public ResponseEntity<?> findAll(@AuthenticationPrincipal User user, @RequestParam boolean closed){
         Set<Task> result = service.findAll(user, closed);
         return ResponseEntity.ok(result);
     }

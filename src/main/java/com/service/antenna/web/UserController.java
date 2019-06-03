@@ -1,5 +1,6 @@
 package com.service.antenna.web;
 
+import com.service.antenna.domain.Role;
 import com.service.antenna.domain.User;
 import com.service.antenna.exceptions.UsernameAlreadyExistsException;
 import com.service.antenna.payload.JWTLoginSucessReponse;
@@ -35,10 +36,10 @@ public class UserController {
     private final AuthenticationManager authenticationManager;
 
     @GetMapping
-    public ResponseEntity<?> getUsers(Principal principal) {
+    public ResponseEntity<?> getUsers(Principal principal, @RequestParam(required = false) Role role) {
         service.checkAuthority(principal.getName());
 
-        Set<User> users = service.findAll();
+        Set<User> users = service.findAll(role);
 
         return ResponseEntity.ok(users);
     }

@@ -82,6 +82,14 @@ public class UserService {
 
     }
 
+    public Set<User> findAll(Role role) {
+        if (role != null) {
+            return repository.findAllByRole(role);
+
+        }
+       return  findAll();
+    }
+
     public Set<User> findAll(Set<Long> id) {
         return repository.findAllById(id);
 
