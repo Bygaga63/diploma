@@ -29,7 +29,7 @@ public class ReportController {
 
     @PostMapping
     public ResponseEntity<?> getReport(@RequestBody ReportRequest rep) {
-        Set<Task> result = taskService.findAll(rep.getUsers(), rep.getBreakdownType(), rep.getStatus(), rep.getPeriod());
+        Set<Task> result = taskService.findAll(rep.getUsers(), rep.getBreakdownType(), rep.getStatus(), rep.getStart(), rep.getEnd());
         return ResponseEntity.ok(result);
 
     }
@@ -40,7 +40,7 @@ public class ReportController {
        String reportInfo = new String(Base64.getDecoder().decode(base64ReportInfo.getBytes()));
         ObjectMapper objectMapper = new ObjectMapper();
         ReportRequest rep = objectMapper.readValue(reportInfo, ReportRequest.class);
-        Set<Task> result = taskService.findAll(rep.getUsers(), rep.getBreakdownType(), rep.getStatus(), rep.getPeriod());
+        Set<Task> result = taskService.findAll(rep.getUsers(), rep.getBreakdownType(), rep.getStatus(), rep.getStart(), rep.getEnd());
         wordService.createFile(new ArrayList<>(result), response);
     }
 }

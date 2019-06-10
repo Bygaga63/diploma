@@ -9,7 +9,8 @@ import java.util.Set;
 
 @Data
 public class ReportRequest {
-    private Date period;
+    private Date start;
+    private Date end;
     private Set<Long> breakdownType;
     private Set<Long> users;
     private Status status;

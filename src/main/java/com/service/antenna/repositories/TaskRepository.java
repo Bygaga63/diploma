@@ -18,8 +18,8 @@ public interface TaskRepository extends CrudRepository<Task, Long> {
     Set<Task> findAll();
     Optional<Task> findByUsersInAndId(User user , Long id);
 //    Set<Task> findAllByUsersAndBreakdownTypeAndStatus(User user, List<BreakdownType> breakdown, Status status);
-    Set<Task> findAllByUsersInAndBreakdownTypeAndStatusAndCreateAtAfter(Set<User> user, List<BreakdownType> breakdown, Status status, Date date);
-    Set<Task> findAllByUsersInAndBreakdownTypeAndCreateAtAfter(Set<User> user, List<BreakdownType> breakdown, Date date);
-    Set<Task> findAllByUsersInAndStatusAndCreateAtAfter(Set<User> user, Status status, Date date);
-    Set<Task> findAllByUsersInAndCreateAtAfter(Set<User> user, Date date);
+    Set<Task> findAllByUsersInAndBreakdownTypeAndStatusAndCreateAtBetween(Set<User> user, List<BreakdownType> breakdown, Status status, Date start, Date end);
+    Set<Task> findAllByUsersInAndBreakdownTypeAndCreateAtBetween(Set<User> user, List<BreakdownType> breakdown, Date start, Date end);
+    Set<Task> findAllByUsersInAndStatusAndCreateAtBetween(Set<User> user, Status status, Date start, Date end);
+    Set<Task> findAllByUsersInAndCreateAtBetween(Set<User> user, Date start, Date end);
 }

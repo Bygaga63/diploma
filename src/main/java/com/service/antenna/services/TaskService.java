@@ -26,24 +26,24 @@ public class TaskService {
 
     }
 
-    public Set<Task> findAll(Set<Long> users, Set<Long> breakId, Status status, Date date){
+    public Set<Task> findAll(Set<Long> users, Set<Long> breakId, Status status, Date start, Date end){
         Set<User> usersFromdb = userService.findAll(users);
 //        User user = userService.findOneRest(userId);
 
         if (breakId.contains(0L) && status == Status.ALL) {
-            return repository.findAllByUsersInAndCreateAtAfter(usersFromdb, date);
+            return repository.findAllByUsersInAndCreateAtBetween(usersFromdb, start,end );
         }
 
         if (breakId.contains(0L)) {
-            return repository.findAllByUsersInAndStatusAndCreateAtAfter(usersFromdb, status, date);
+            return repository.findAllByUsersInAndStatusAndCreateAtBetween(usersFromdb, status, start,end);
         }
 
         List<BreakdownType> breakdownTypes = breakdownTypeService.findAllById(breakId);
         if (status == Status.ALL){
-            return repository.findAllByUsersInAndBreakdownTypeAndCreateAtAfter(usersFromdb, breakdownTypes, date);
+            return repository.findAllByUsersInAndBreakdownTypeAndCreateAtBetween(usersFromdb, breakdownTypes, start,end);
         }
 
-        return repository.findAllByUsersInAndBreakdownTypeAndStatusAndCreateAtAfter(usersFromdb, breakdownTypes, status, date);
+        return repository.findAllByUsersInAndBreakdownTypeAndStatusAndCreateAtBetween(usersFromdb, breakdownTypes, status, start,end);
     }
 
     public Task findOneRest(User user, Long id) {
