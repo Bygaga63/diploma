@@ -18,6 +18,7 @@ public class TaskService {
     private final UserService userService;
     private final AddressService addressService;
     private final BreakdownTypeService breakdownTypeService;
+
     public Set<Task> findAll(User user, boolean isClosed) {
         if (user.getRole() == Role.USER) {
             return repository.findAllByUsersAndIsClosed(user, isClosed);
@@ -26,31 +27,31 @@ public class TaskService {
 
     }
 
-    public Set<Task> findAll(Set<Long> users, Set<Long> breakId, Status status, Date start, Date end){
+    public Set<Task> findAll(Set<Long> users, Set<Long> breakId, Status status, Date start, Date end) {
         Set<User> usersFromdb = userService.findAll(users);
 //        User user = userService.findOneRest(userId);
 
         if (breakId.contains(0L) && status == Status.ALL) {
-            return repository.findAllByUsersInAndCreateAtBetween(usersFromdb, start,end );
+            return repository.findAllByUsersInAndCreateAtBetween(usersFromdb, start, end);
         }
 
         if (breakId.contains(0L)) {
-            return repository.findAllByUsersInAndStatusAndCreateAtBetween(usersFromdb, status, start,end);
+            return repository.findAllByUsersInAndStatusAndCreateAtBetween(usersFromdb, status, start, end);
         }
 
         List<BreakdownType> breakdownTypes = breakdownTypeService.findAllById(breakId);
-        if (status == Status.ALL){
-            return repository.findAllByUsersInAndBreakdownTypeAndCreateAtBetween(usersFromdb, breakdownTypes, start,end);
+        if (status == Status.ALL) {
+            return repository.findAllByUsersInAndBreakdownTypeAndCreateAtBetween(usersFromdb, breakdownTypes, start, end);
         }
 
-        return repository.findAllByUsersInAndBreakdownTypeAndStatusAndCreateAtBetween(usersFromdb, breakdownTypes, status, start,end);
+        return repository.findAllByUsersInAndBreakdownTypeAndStatusAndCreateAtBetween(usersFromdb, breakdownTypes, status, start, end);
     }
 
     public Task findOneRest(User user, Long id) {
         return repository.findByUsersInAndId(user, id).orElseThrow(() -> new CustomException("Заявка не найдена"));
     }
 
-    public Optional<Task>findOne(User user, Long id) {
+    public Optional<Task> findOne(User user, Long id) {
         return repository.findByUsersInAndId(user, id);
     }
 

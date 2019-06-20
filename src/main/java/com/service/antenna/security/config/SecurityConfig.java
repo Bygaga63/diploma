@@ -81,6 +81,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(SIGN_UP_URLS + "/login").permitAll()
                 .antMatchers(H2_URL).permitAll()
                 .antMatchers("/api/report/**").permitAll()
+                .antMatchers("/api/address/**").permitAll()
                 .antMatchers("/login").permitAll()
                 .anyRequest().authenticated();
 

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 //import java.util.Date;
 import java.util.Date;
 import java.util.HashSet;
@@ -20,7 +21,9 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank
     private Status status;
+    @NotBlank
     private Integer priority;
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "create_At")
