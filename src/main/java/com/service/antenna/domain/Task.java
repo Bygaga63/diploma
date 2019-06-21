@@ -21,9 +21,7 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
     private Status status;
-    @NotBlank
     private Integer priority;
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "create_At")
