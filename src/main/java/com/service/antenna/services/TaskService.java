@@ -47,8 +47,8 @@ public class TaskService {
         return repository.findAllByUsersInAndBreakdownTypeAndStatusAndCreateAtBetween(usersFromdb, breakdownTypes, status, start, end);
     }
 
-    public Task findOneRest(User user, Long id) {
-        return repository.findByUsersInAndId(user, id).orElseThrow(() -> new CustomException("Заявка не найдена"));
+    public Task findOneRest(Long id) {
+        return repository.findById(id).orElseThrow(() -> new CustomException("Заявка не найдена"));
     }
 
     public Optional<Task> findOne(User user, Long id) {

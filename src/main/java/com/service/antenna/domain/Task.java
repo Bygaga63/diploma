@@ -54,7 +54,9 @@ public class Task {
             inverseJoinColumns = { @JoinColumn(name = "user_id") })
     private Set<User> users = new HashSet<>();
 
-    @JsonFormat(pattern = "yyyy-mm-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "due_date")
+    @Temporal(TemporalType.DATE)
     private Date dueDate;
 
 

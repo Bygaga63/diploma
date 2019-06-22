@@ -30,8 +30,8 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findOne(@PathVariable Long id, @AuthenticationPrincipal User user){
-        Task task = service.findOneRest(user, id);
+    public ResponseEntity<?> findOne(@PathVariable Long id){
+        Task task = service.findOneRest(id);
         return ResponseEntity.ok(task);
     }
 
